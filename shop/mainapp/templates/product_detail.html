@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load specifications %}
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+        <img src="{{ product.image.url }}" width="400" class="img-fluid">
+    </div>
+
+    <div class="col-md-8">
+        <h3>{{ product.title }}</h3>
+        <p> Price: {{ product.price }} USD </p>
+        <p> Description: {{ product.description }} </p>
+    </div>
+    <div>
+    <p class="mt-4"> Specifications:
+        {{ product | product_spec }}
+    </p>
+    </div>
+</div>
+
+{% endblock content %}
