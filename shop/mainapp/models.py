@@ -122,7 +122,7 @@ class CartProduct(models.Model):
 
 
 class Cart(models.Model):
-    owner = models.ForeignKey('Customer', verbose_name='User', on_delete=models.CASCADE)
+    owner = models.ForeignKey('Customer', verbose_name='User', on_delete=models.CASCADE, unique=True)
     products = models.ManyToManyField(CartProduct, blank=True, related_name='related_cart')
     total_products = models.PositiveIntegerField(default=0)
     final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Total Price")

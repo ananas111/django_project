@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, View
-from .models import SoftwareProduct, Game, Category, LatestProducts
+from .models import SoftwareProduct, Game, Category, LatestProducts, Cart, Customer
 from .mixins import CategoryDetailMixin
+from django.http import HttpResponseRedirect
 
 
 class BaseView(View):
@@ -38,7 +39,7 @@ class ProductDetailView(CategoryDetailMixin, DetailView):
         return context
 
 
-class CategoryDetailView(CategoryDetailMixin, DetailView):
+class CategoryDetailView(DetailView):
 
     model = Category
     queryset = Category.objects.all()
@@ -47,5 +48,22 @@ class CategoryDetailView(CategoryDetailMixin, DetailView):
     slug_url_kwarg = 'slug'
 
 
+class CartView(View):
+
+    def get(self, request, *args, **kwargs):
+        customer = Customer.objects.get(user=request.user)
+        cart = Cart.objects.get(owner=customer)
+        categories = Category.objects.get_categories_for_left_sidebar()
+        context = {
+            'cart': cart,
+            'categories': categories
+        }
+        return render(request, 'cart.html', context)
 
 
+class AddToCartView(View):
+
+    def get(self, request, *args, **kwargs):
+        print(kwargs.get('ct_model'))
+        print(kwargs.get('slug'))
+        return HttpResponseRedirect('/cart/')

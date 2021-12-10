@@ -20,7 +20,7 @@ TABLE_CONTENT = """
                     </tr>
                 """
 PRODUCT_SPEC = {
-    'softwareproduct': {
+    'software': {
         'OS Type': 'OS',
         'Subscription Duration': 'subscription_duration'
     },
